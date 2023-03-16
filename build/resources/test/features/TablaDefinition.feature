@@ -11,6 +11,6 @@ Feature: completar tabla
 
     Examples:
       | firstName | lastName   | age   | email              | salary    | department |
-      | "Diego"   | "Buitrago" | "12"  | "gretym@gmail.com" | "2000000" | "QA"       |
-      | "Adriana" | "Taborda"  | "10"  | "adri@gmail.com"   | "3000000" | "QA"       |
+      | "Diego"   | "Buitrago" | "12"  | "diegom@gmail.com" | "2000000" | "QA"       |
+      | "yeison"  | "osorio"   | "10"  | "yeison@gmail.com" | "1400000" | "QA"       |
       | "Mariana" | "Monsalve" | "155" | "mar@gmail.com"    | "5000000" | "QA"       |

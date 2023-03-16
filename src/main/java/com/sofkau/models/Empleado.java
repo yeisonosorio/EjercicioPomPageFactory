@@ -1,13 +1,13 @@
 package com.sofkau.models;
 
 public class Empleado {
-
     private String nombre;
     private String apellido;
     private String edad;
     private String email;
     private String salario;
     private String departamento;
+
 
 
     public Empleado(String nombre, String apellido, String edad, String email, String salario, String departamento) {
