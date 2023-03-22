@@ -5,6 +5,7 @@ import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.apache.log4j.Logger;
 
 import static com.sofkau.setup.ConstantSetup.DEMO_QA_URL;
 import static com.sofkau.util.log4j.LOG4J_PROPERTIES_FILE_PATH;

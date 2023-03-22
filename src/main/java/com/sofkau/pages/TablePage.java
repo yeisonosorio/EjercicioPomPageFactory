@@ -13,8 +13,6 @@ import java.util.List;
 
 public class TablePage extends CommonActionOnPages {
 
-    private final Empleado empleado;
-
 
     /**
      * Localizadores
@@ -76,11 +74,11 @@ public class TablePage extends CommonActionOnPages {
 
     private By celdas = By.xpath(".//div[@role='gridcell']");
 
-    //button[@id='submit']
+    public static List<String> datosRegistrados = new ArrayList<>();
+    public static List<String> datosTabla = new ArrayList<>();
 
-    public TablePage(WebDriver driver, Empleado empleado) {
+    public TablePage(WebDriver driver) {
         super(driver);
-        this.empleado = empleado;
         PageFactory.initElements(driver, this);
 
     }
@@ -95,39 +93,58 @@ public class TablePage extends CommonActionOnPages {
     }
 
 
-    public void insertDatos() throws InterruptedException {
+    public void insertDatos(String nombre, String apellido, String edad, String correo, String salario, String departamento) throws InterruptedException {
+        datosRegistrados.clear();
+        datosTabla.clear();
         click(botonAdd);
         clearText(firstName);
-        typeInto(firstName, empleado.getNombre());
+        typeInto(firstName, nombre);
 
         clearText(lastName);
-        typeInto(lastName, empleado.getApellido());
-
-        clearText(userEmail);
-        typeInto(userEmail, empleado.getEmail());
+        typeInto(lastName, apellido);
 
         clearText(age);
-        typeInto(age, empleado.getEdad());
+        typeInto(age, edad);
+
+        clearText(userEmail);
+        typeInto(userEmail, correo);
+
 
         clearText(salary);
-        typeInto(salary, empleado.getSalario());
+        typeInto(salary, salario);
 
         clearText(department);
-        typeInto(department, empleado.getDepartamento());
+        typeInto(department, departamento);
+        click(botonSutmit);
 
-        click(botonSutmit);
-        click(botonSutmit);
+        //ingresar los datos
+        datosRegistrados.add(nombre);
+        datosRegistrados.add(apellido);
+        datosRegistrados.add(edad);
+        datosRegistrados.add(correo);
+        datosRegistrados.add(salario);
+        datosRegistrados.add(departamento);
+
+
+        //verificar los datos
+        datosTabla.add(getText(By.xpath("//div/descendant::*[338]")));
+        datosTabla.add(getText(By.xpath("//div/descendant::*[339]")));
+        datosTabla.add(getText(By.xpath("//div/descendant::*[340]")));
+        datosTabla.add(getText(By.xpath("//div/descendant::*[341]")));
+        datosTabla.add(getText(By.xpath("//div/descendant::*[342]")));
+        datosTabla.add(getText(By.xpath("//div/descendant::*[343]")));
+
 
     }
 
 
-    public List<String> estaRegistrado() {
-        List<String> resultado = new ArrayList<>();
-        resultado.add(getText((By) firstName).trim());
-        resultado.add(getText((By) lastName).trim());
-        resultado.add(getText((By) userEmail).trim());
-
-        return resultado;
+    public void datosTabla() {
+        datosTabla.add(getText(By.xpath("//div/descendant::*[338]")));
+        datosTabla.add(getText(By.xpath("//div/descendant::*[339]")));
+        datosTabla.add(getText(By.xpath("//div/descendant::*[340]")));
+        datosTabla.add(getText(By.xpath("//div/descendant::*[341]")));
+        datosTabla.add(getText(By.xpath("//div/descendant::*[342]")));
+        datosTabla.add(getText(By.xpath("//div/descendant::*[343]")));
     }
 
 

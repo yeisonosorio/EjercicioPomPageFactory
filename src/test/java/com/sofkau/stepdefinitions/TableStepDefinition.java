@@ -10,15 +10,14 @@ import org.junit.jupiter.api.Assertions;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
+
 
 public class TableStepDefinition extends WebUI {
 
 
-    private Empleado empleado;
-
-    private TablePage tablePage;
-    public static Logger LOGGER = Logger.getLogger(String.valueOf(TableStepDefinition.class));
+    public static Logger LOGGER = Logger.getLogger(TableStepDefinition.class);
 
     private static final String ASSERTION_EXCEPTION_MESSAGE = "No son los valores esperados";
 
@@ -30,53 +29,28 @@ public class TableStepDefinition extends WebUI {
 
     @When("navega hasta la opcion de elementos en la opcion Web tables")
     public void navegaHastaLaOpcionDeElementosEnLaOpcionWebTables() throws InterruptedException {
-        TablePage tablePage = new TablePage(super.driver, empleado);
+        TablePage tablePage = new TablePage(super.driver);
         tablePage.clickInicio();
     }
 
     @When("completa con nombre {string}, apellido {string}, edad {string}, correo electronico {string}, salario {string}, departamento {string}")
     public void completaConNombreApellidoEdadCorreoElectronicoSalarioDepartamento(String nombre, String apellido, String edad, String email, String salario, String departamento) throws InterruptedException {
+        TablePage tablePage = new TablePage(super.driver);
+        //tiempo muerto
+        tablePage.insertDatos(nombre, apellido, edad, email, salario, departamento);
+    }
+
+    @Then("debe observar una tabla con la informacion ingresada")
+    public void debeObservarUnaTablaConLaInformacionIngresada() throws InterruptedException {
         try {
-            tablePage = new TablePage(super.driver, empleado);
-            tablePage.insertDatos();
-            Assertions.assertEquals(
-                    tablePage.estaRegistrado(), elementosRegistrados(),
-                    String.format(ASSERTION_EXCEPTION_MESSAGE, resultado()));
+            Assertions.assertEquals(TablePage.datosRegistrados, TablePage.datosTabla);
         } catch (Exception e) {
-            LOGGER.warning(e.getMessage());
+            LOGGER.warn(ASSERTION_EXCEPTION_MESSAGE, e);
         } finally {
             quiteDriver();
         }
 
     }
 
-
-    @Then("debe observar una tabla con la informacion ingresada")
-    public void debeObservarUnaTablaConLaInformacionIngresada() {
-
-    }
-
-    public void llenarDatos() {
-        Empleado empleado = new Empleado();
-        empleado.setNombre("Juan");
-        empleado.setApellido("Pérez");
-        empleado.setEdad("22");
-        empleado.setEmail("juanperez@example.com");
-        empleado.setSalario("5000");
-        empleado.setDepartamento("Informática");
-    }
-
-
-    public List<String> elementosRegistrados() {
-        List<String> botonResultado = new ArrayList<>();
-        botonResultado.add(empleado.getNombre().trim() + " " + empleado.getApellido().trim());
-        botonResultado.add(empleado.getEmail().trim());
-        return botonResultado;
-
-    }
-
-    private String resultado() {
-        return "\n" + tablePage.estaRegistrado().toString() + "\n" + elementosRegistrados().toString();
-    }
 
 }
